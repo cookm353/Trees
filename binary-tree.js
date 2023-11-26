@@ -78,14 +78,38 @@ class BinaryTree {
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
-    
+    let sum = 0
+
+    const toVisitQueue = [this.root]
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    if (!this.root) return null
+    
+    let lowestVal = lowerBound
 
+    const toVisitQueue = [this.root]
+
+    while (toVisitQueue.length) {
+      const currNode = toVisitQueue.shift()
+
+      if (lowestVal === lowerBound) {
+        if (currNode.val > lowestVal) lowestVal = currNode.val
+      } else {
+        if (currNode.val < lowestVal && currNode.val > lowerBound) {
+          lowestVal = currNode.val
+        }
+      }
+
+      if (currNode.left) toVisitQueue.push(currNode.left)
+      if (currNode.right) toVisitQueue.push(currNode.right)
+    }
+
+    if (lowestVal === lowerBound) return null
+    return lowestVal
   }
 
   /** Further study!
